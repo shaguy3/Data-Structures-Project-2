@@ -92,4 +92,7 @@ int main() {
 	} while (choice != 0);
 
 	// delete tree;
+
+	/*Heap testing*/
+
 }
