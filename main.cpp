@@ -1,4 +1,5 @@
 #include "binary_search_tree.h"
+#include "MinHeap.h"
 #include <iostream>
 
 using namespace std;

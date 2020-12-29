@@ -1,11 +1,5 @@
 #pragma once
 
-typedef struct pair
-{
-	int frequency;
-	char sign;
-}Pair;
-
 class MinHeap
 {
 	private:
@@ -25,5 +19,5 @@ class MinHeap
 		bool isEmpty();
 		void fixHeap(int node);
 		Pair getMin();
-		void swap(pair& a, pair& b);
+		void swap(Pair& a, Pair& b);
 };
