@@ -36,7 +36,7 @@ void MinHeap::fixHeap(int node)
 	int left = getLeft(node);
 	int right = getRight(node);
 
-	if (left<logSize && arr[right].frequency<arr[node].frequency)
+	if (left<logSize && arr[left].frequency<arr[node].frequency)
 	{
 		min = left;
 	}
@@ -125,5 +125,3 @@ bool MinHeap::isEmpty()
 }
 
 Pair MinHeap::getPairById(int n) { return arr[n]; }
-
-int MinHeap::getfreq(int n) { return arr[n].frequency; }

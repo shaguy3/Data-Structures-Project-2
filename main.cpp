@@ -1,5 +1,4 @@
 #include "binary_search_tree.h"
-#include "MinHeap.h"
 #include <iostream>
 
 using namespace std;
@@ -68,7 +67,7 @@ void print_tree(BST* tree) {
 
 int main() {
 
-	/* BST testing 
+	/* BST testing */
 	BST* tree = new BST();
 
 	int choice = 0;
@@ -91,30 +90,6 @@ int main() {
 			print_tree(tree);
 		}
 	} while (choice != 0);
-	*/
-	// delete tree;
 
-	/*Heap testing*/
-	MinHeap* tst = new MinHeap(5);
-	Pair a, b, c, d, e;
-	a.charecter = 'a';
-	a.frequency = 10;
-	b.charecter = 'b';
-	b.frequency = 12;
-	c.charecter = 'c';
-	c.frequency = 8;
-	d.charecter = 'd';
-	d.frequency = 4;
-	e.charecter = 'e';
-	e.frequency = 2;
-	tst->insertMin(a);
-	tst->insertMin(b);
-	tst->insertMin(c);
-	tst->insertMin(d);
-	tst->insertMin(e);
-	for (int i = 0; i < 5; i++)
-	{
-		Pair min = tst->getPairById(2);
-	}
-	
+	// delete tree;
 }
