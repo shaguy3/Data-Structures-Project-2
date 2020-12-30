@@ -1,5 +1,4 @@
 #include "MinHeap.h"
-
 MinHeap::MinHeap(int n)
 {
 	arr = new Pair[n];
@@ -20,15 +19,15 @@ int MinHeap::getLeft(int node) { return (node*2+1); }
 int MinHeap::getRight(int node) { return (node*2+2); }
 int MinHeap::getParent(int node) { return ((node - 1) / 2); }
 
-void MinHeap::swap(pair& a, pair& b)
+void MinHeap::swap(Pair& a, Pair& b)
 {
-	pair tmp;
+	Pair tmp;
 	tmp.frequency = a.frequency;
-	tmp.sign = a.sign;
+	tmp.charecter = a.charecter;
 	a.frequency = b.frequency;
-	a.sign = b.sign;
+	a.charecter = b.charecter;
 	b.frequency = tmp.frequency;
-	b.sign = tmp.sign;
+	b.charecter = tmp.charecter;
 }
 
 void MinHeap::fixHeap(int node)
@@ -63,7 +62,7 @@ Pair MinHeap::deleteMin()
 	{
 		Pair err;
 		err.frequency = -1;
-		err.sign = -1;
+		err.charecter = -1;
 		return err;
 	}
 	Pair min = arr[0];
@@ -78,11 +77,11 @@ void MinHeap::insertMin(Pair node)
 	if (logSize == realSize)
 	{
 		realSize *= 2;
-		pair* newarr = new Pair[realSize];
+		Pair* newarr = new Pair[realSize];
 		for (int i = 0; i < logSize; i++)
 		{
 			newarr[i].frequency = arr[i].frequency;
-			newarr[i].sign = arr[i].sign;
+			newarr[i].charecter = arr[i].charecter;
 		}
 		if (allocated)
 		{
@@ -125,3 +124,6 @@ bool MinHeap::isEmpty()
 	}
 }
 
+Pair MinHeap::getPairById(int n) { return arr[n]; }
+
+int MinHeap::getfreq(int n) { return arr[n].frequency; }

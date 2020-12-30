@@ -1,4 +1,6 @@
 #pragma once
+#include "tree_node.h"
+
 
 class MinHeap
 {
@@ -20,4 +22,6 @@ class MinHeap
 		void fixHeap(int node);
 		Pair getMin();
 		void swap(Pair& a, Pair& b);
+		Pair getPairById(int n);
+		int getfreq(int n);
 };
