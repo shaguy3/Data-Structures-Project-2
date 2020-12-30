@@ -1,4 +1,5 @@
 #include "binary_search_tree.h"
+#include "MinHeap.h"
 #include <iostream>
 
 using namespace std;
@@ -92,4 +93,7 @@ int main() {
 	} while (choice != 0);
 
 	// delete tree;
+
+	/*Heap testing*/
+
 }
