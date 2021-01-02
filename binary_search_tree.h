@@ -4,6 +4,7 @@
 class BST {
 private:
 	TreeNode* root;
+	int num_of_nodes = 0;
 
 public:
 	/* Constructors and destructors */
@@ -12,12 +13,13 @@ public:
 
 	/* getters */
 	TreeNode* getRoot() const { return root; }
+	int getNumOfNodes() const { return num_of_nodes; }
 
 	/* Basic BST functions */
-	TreeNode* Find(int key);
-	bool Insert(Pair item);
-	TreeNode* Delete(int key);
-	Pair DeleteMin();
+	TreeNode* Find(char key);
+	bool Insert(char key);
+	TreeNode* Delete(char key);
+	TreeNode* DeleteMin();
 
 	/* Min and Max*/
 	TreeNode* Min(TreeNode* _root); // Find Min relative to the provided _root

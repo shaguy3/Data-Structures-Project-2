@@ -14,7 +14,12 @@ public:
 
 	/* Getters */
 	TreeNode* Root() const { return root; }
+
+	/* Setters */
+	bool setRoot(TreeNode* node) { root = node; return true; }
 	
 	/* Prints */
-	void InOrder() const { root->inOrder(); }
+	void InOrder() const {
+		
+	}
 };

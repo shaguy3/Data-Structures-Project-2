@@ -1,9 +1,11 @@
 #pragma once
+#include "tree_node.h"
+
 
 class MinHeap
 {
 	private:
-		Pair* arr;
+		TreeNode** arr;
 		int logSize;
 		int realSize;
 		static int getLeft(int node);
@@ -12,12 +14,15 @@ class MinHeap
 		bool allocated;
 	public:
 		MinHeap(int n);
-		MinHeap(Pair* A, int n);
+		MinHeap(TreeNode** A, int n);
 		~MinHeap();
-		void insertMin(Pair node);
-		Pair deleteMin();
+		void insertMin(TreeNode* node);
+		TreeNode* deleteMin();
 		bool isEmpty();
 		void fixHeap(int node);
-		Pair getMin();
-		void swap(Pair& a, Pair& b);
+		TreeNode* getMin();
+		void swap(TreeNode*& a, TreeNode*& b);
+		TreeNode* getPairById(int n);
+		int getfreq(int n);
+		int getSize() { return logSize; }
 };

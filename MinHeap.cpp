@@ -1,8 +1,7 @@
 #include "MinHeap.h"
-
 MinHeap::MinHeap(int n)
 {
-	arr = new Pair[n];
+	arr = new TreeNode * [n];
 	logSize = 0;
 	realSize = n;
 	allocated = true;
@@ -20,15 +19,12 @@ int MinHeap::getLeft(int node) { return (node*2+1); }
 int MinHeap::getRight(int node) { return (node*2+2); }
 int MinHeap::getParent(int node) { return ((node - 1) / 2); }
 
-void MinHeap::swap(pair& a, pair& b)
+
+void MinHeap::swap(TreeNode*& a, TreeNode*& b)
 {
-	pair tmp;
-	tmp.frequency = a.frequency;
-	tmp.sign = a.sign;
-	a.frequency = b.frequency;
-	a.sign = b.sign;
-	b.frequency = tmp.frequency;
-	b.sign = tmp.sign;
+	TreeNode* tmp = a;
+	a = b;
+	b = tmp;
 }
 
 void MinHeap::fixHeap(int node)
@@ -37,7 +33,7 @@ void MinHeap::fixHeap(int node)
 	int left = getLeft(node);
 	int right = getRight(node);
 
-	if (left<logSize && arr[right].frequency<arr[node].frequency)
+	if ((left<logSize) && (arr[left]->getPair().frequency < arr[node]->getPair().frequency))
 	{
 		min = left;
 	}
@@ -45,7 +41,7 @@ void MinHeap::fixHeap(int node)
 	{
 		min = node;
 	}
-	if (right<logSize && arr[right].frequency<arr[min].frequency)
+	if ((right<logSize) && (arr[right]->getPair().frequency < arr[min]->getPair().frequency))
 	{
 		min = right;
 	}
@@ -57,32 +53,27 @@ void MinHeap::fixHeap(int node)
 	}
 }
 
-Pair MinHeap::deleteMin()
+TreeNode* MinHeap::deleteMin()
 {
 	if (logSize==0)
-	{
-		Pair err;
-		err.frequency = -1;
-		err.sign = -1;
-		return err;
-	}
-	Pair min = arr[0];
+		return nullptr;
+	
+	TreeNode* min = arr[0];
 	logSize--;
 	arr[0] = arr[logSize];
 	fixHeap(0);
 	return min;
 }
 
-void MinHeap::insertMin(Pair node)
+void MinHeap::insertMin(TreeNode* node)
 {
 	if (logSize == realSize)
 	{
 		realSize *= 2;
-		pair* newarr = new Pair[realSize];
+		TreeNode** newarr = new TreeNode * [realSize];
 		for (int i = 0; i < logSize; i++)
 		{
-			newarr[i].frequency = arr[i].frequency;
-			newarr[i].sign = arr[i].sign;
+			newarr[i] = new TreeNode(arr[i]->getPair(), nullptr, nullptr);
 		}
 		if (allocated)
 		{
@@ -92,7 +83,7 @@ void MinHeap::insertMin(Pair node)
 	}
 	int i = logSize;
 	logSize++;
-	while (i>0 && arr[getParent(i)].frequency>node.frequency)
+	while (i>0 && arr[getParent(i)]->getPair().frequency>node->getPair().frequency)
 	{
 		arr[i] = arr[getParent(i)];
 		i = getParent(i);
@@ -100,7 +91,7 @@ void MinHeap::insertMin(Pair node)
 	arr[i] = node;
 }
 
-MinHeap::MinHeap(Pair* A, int n)
+MinHeap::MinHeap(TreeNode** A, int n)
 {
 	realSize = logSize = n;
 	arr = A;
@@ -111,7 +102,7 @@ MinHeap::MinHeap(Pair* A, int n)
 	}
 }
 
-Pair MinHeap::getMin(){	return arr[0];}
+TreeNode* MinHeap::getMin() { return arr[0]; }
 
 bool MinHeap::isEmpty()
 {
@@ -125,3 +116,6 @@ bool MinHeap::isEmpty()
 	}
 }
 
+TreeNode* MinHeap::getPairById(int n) { return arr[n]; }
+
+int MinHeap::getfreq(int n) { return arr[n]->getPair().frequency; }

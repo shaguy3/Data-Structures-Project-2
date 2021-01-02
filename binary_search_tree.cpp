@@ -8,13 +8,13 @@ BST::~BST() {
 	if (root) { delete root; }
 }
 
-TreeNode* BST::Find(int key) {
+TreeNode* BST::Find(char key) {
 	TreeNode* node = root;
 	while (node) {
-		if (node->getPair().frequency == key) {
+		if (node->getPair().character == key) {
 			return node;
 		}
-		else if (node->getPair().frequency > key) {
+		else if (node->getPair().character > key) {
 			node = node->Left();
 		}
 		else {
@@ -40,14 +40,18 @@ TreeNode* BST::Max(TreeNode* _root) {
 	return cur_max;
 }
 
-bool BST::Insert(Pair item) {
+bool BST::Insert(char key) {
 	TreeNode* node = root;
 	TreeNode* parent = nullptr;
 	TreeNode* new_node = nullptr;
 
 	while (node) {
 		parent = node;
-		if (item.frequency <= node->getPair().frequency) {
+		if (key == node->getPair().character) {
+			node->addFreq();
+			return true;
+		}
+		else if (key < node->getPair().character) {
 			node = node->Left();
 		}
 		else {
@@ -55,27 +59,29 @@ bool BST::Insert(Pair item) {
 		}
 	}
 
-	new_node = new TreeNode(item, nullptr, nullptr);
+	new_node = new TreeNode({ 1, key }, nullptr, nullptr);
 	if (!parent) {
 		root = new_node;
 	}
-	else if (item.frequency <= parent->getPair().frequency) {
-		parent->setLeft(new_node);
-	}
 	else {
-		parent->setRight(new_node);
+		if (new_node->getPair().character < parent->getPair().character) {
+			parent->setLeft(new_node);
+		}
+		else {
+			parent->setRight(new_node);
+		}
 	}
-
+	num_of_nodes++;
 	return true;
 }
 
-TreeNode* BST::Delete(int key) {
+TreeNode* BST::Delete(char key) {
 	TreeNode* deleted = nullptr;
 	TreeNode* cur_node = root;
 	TreeNode* parent = nullptr;
 
 	while (cur_node) {
-		if (cur_node->getPair().frequency == key) {
+		if (cur_node->getPair().character == key) {
 			deleted = cur_node;
 			if (!cur_node->Left() && !cur_node->Right()) { // If the deleted node is a leaf
 				if (parent) {
@@ -132,9 +138,10 @@ TreeNode* BST::Delete(int key) {
 				deleted = left_max; // Returning the swapped pair
 				left_max_parent->setRight(left_max->Left());
 			}
+			num_of_nodes--;
 			return deleted;
 		}
-		else if (cur_node->getPair().frequency > key) {
+		else if (cur_node->getPair().character > key) {
 			parent = cur_node;
 			cur_node = cur_node->Left();
 		}
@@ -144,36 +151,41 @@ TreeNode* BST::Delete(int key) {
 		}
 	}
 
-	return deleted;
+	return nullptr;
 }
 
-Pair BST::DeleteMin() {
+TreeNode* BST::DeleteMin() {
 	TreeNode* cur_min = root;
 	TreeNode* parent = nullptr;
 
-	while (cur_min->Left()) {
-		parent = cur_min;
-		cur_min = cur_min->Left();
+	if (cur_min) {
+		while (cur_min->Left()) {
+			parent = cur_min;
+			cur_min = cur_min->Left();
+		}
+
+		if (!cur_min->Left() && !cur_min->Right()) { // If the deleted node is a leaf
+			if (parent) {
+				parent->setLeft(nullptr);
+			}
+			else {
+				root = nullptr;
+			}
+		}
+		else if (!cur_min->Left()) { // If the deleted node has only a right child
+			if (parent) {
+				parent->setLeft(cur_min->Right());
+			}
+			else {
+				root = cur_min->Right();
+			}
+		}
+
+		num_of_nodes--;
+		return cur_min;
 	}
 
-	if (!cur_min->Left() && !cur_min->Right()) { // If the deleted node is a leaf
-		if (parent) {
-			parent->setLeft(nullptr);
-		}
-		else {
-			root = nullptr;
-		}
-	}
-	else if (!cur_min->Left()) { // If the deleted node has only a right child
-		if (parent) {
-			parent->setLeft(cur_min->Right());
-		}
-		else {
-			root = cur_min->Right();
-		}
-	}
-
-	return cur_min->getPair();
+	return nullptr;
 }
 
 void BST::inOrder() {

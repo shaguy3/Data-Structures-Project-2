@@ -4,15 +4,15 @@ TreeNode::TreeNode() :
 	left(nullptr),
 	right(nullptr)
 {
+	pair.character = '\0';
 	pair.frequency = 0;
-	pair.charecter = '\0';
 }
 
 TreeNode::TreeNode(Pair _pair, TreeNode* left, TreeNode* right) :
 	left(left), right(right)
 {
 	pair.frequency = _pair.frequency;
-	pair.charecter = _pair.charecter;
+	pair.character = _pair.character;
 }
 
 TreeNode::~TreeNode() {
@@ -25,9 +25,23 @@ void TreeNode::inOrder() {
 		if (left) {
 			left->inOrder();
 		}
-		cout << "(" << pair.frequency << ", " << pair.charecter << ") ";
+		cout << "(" << pair.frequency << " , " << pair.character << ") ";
 		if (right) {
 			right->inOrder();
 		}
 	}
+}
+
+void TreeNode::getHuffmanCode(string to_print) {
+	if (left) {
+		to_print.push_back('0');
+		left->getHuffmanCode(to_print);
+	
+		to_print.push_back('1');
+		right->getHuffmanCode(to_print);
+	}
+	else {
+		cout << pair.character << ": " << to_print;
+	}
+	cout << endl;
 }
