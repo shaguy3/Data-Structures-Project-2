@@ -35,5 +35,5 @@ public:
 
 	/* prints */
 	void inOrder();
-	void getHuffmanCode(string to_print);
+	void getHuffmanCode(string to_print, int& counter);
 };

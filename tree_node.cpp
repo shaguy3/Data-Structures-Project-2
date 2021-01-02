@@ -32,16 +32,21 @@ void TreeNode::inOrder() {
 	}
 }
 
-void TreeNode::getHuffmanCode(string to_print) {
-	if (left) {
-		to_print.push_back('0');
-		left->getHuffmanCode(to_print);
-	
-		to_print.push_back('1');
-		right->getHuffmanCode(to_print);
+void TreeNode::getHuffmanCode(string to_print, int& counter) {
+	if (this) {
+		if (left || right) {
+			to_print.push_back('0');
+			left->getHuffmanCode(to_print, counter);
+			to_print.pop_back();
+
+			to_print.push_back('1');
+			right->getHuffmanCode(to_print, counter);
+			to_print.pop_back();
+		}
+		else {
+			if (to_print.size() == 0) { to_print.push_back('0'); }
+			cout << "'" << pair.character << "' - " << to_print << endl;
+			counter += pair.frequency * to_print.size();
+		}
 	}
-	else {
-		cout << pair.character << ": " << to_print;
-	}
-	cout << endl;
 }

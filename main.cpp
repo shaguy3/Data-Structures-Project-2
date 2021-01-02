@@ -18,14 +18,15 @@ BST* readFile() {
 	BST* tree = new BST();
 	char ch = '\0';
 
+	in >> ch;
 	while (!in.eof()) {
 		if (!in.good()) {
 			cout << "Error reading" << endl;
 			exit(-1);
 		}
 
-		in >> ch;
 		tree->Insert(ch);
+		in >> ch;
 	}
 	in.close();
 
@@ -35,7 +36,10 @@ BST* readFile() {
 MinHeap* buildHeapFromBST(BST* search_tree) {
 	MinHeap* min_heap = new MinHeap(search_tree->getNumOfNodes());
 	while (search_tree->getRoot()) {
-		min_heap->insertMin(search_tree->DeleteMin());
+		TreeNode* deleted = search_tree->DeleteMin();
+		deleted->setLeft(nullptr);
+		deleted->setRight(nullptr);
+		min_heap->insertMin(deleted);
 	}
 
 	return min_heap;
@@ -62,17 +66,18 @@ int main() {
 
 	BST* search_tree = readFile();
 
-	cout << "Printing tree: " << endl;
-	search_tree->inOrder();
-	cout << endl << endl;
-
 	MinHeap* min_heap = buildHeapFromBST(search_tree);
 
 	BTree* huffman_tree = new BTree();
 	huffman_tree->setRoot(buildHuffmanTree(min_heap));
 
+
+	cout << "Character encoding:" << endl;
 	string to_print;
-	huffman_tree->Root()->getHuffmanCode(to_print);
+	int counter = 0;
+	huffman_tree->Root()->getHuffmanCode(to_print, counter);
+
+	cout << endl << "Encoded file weight: " << counter << " bits" << endl;
 
 	delete search_tree;
 	delete min_heap;
