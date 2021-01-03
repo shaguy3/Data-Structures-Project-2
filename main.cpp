@@ -17,8 +17,15 @@ BST* readFile() {
 
 	BST* tree = new BST();
 	char ch = '\0';
-
-	in >> ch;
+	if (in.good())
+	{
+		in >> ch;
+	}
+	else
+	{
+		cout << "Error reading" << endl;
+		exit(-1);
+	}
 	while (!in.eof()) {
 		if (!in.good()) {
 			cout << "Error reading" << endl;
