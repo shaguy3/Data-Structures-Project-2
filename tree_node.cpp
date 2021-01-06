@@ -44,9 +44,16 @@ void TreeNode::getHuffmanCode(string to_print, int& counter) {
 			to_print.pop_back();
 		}
 		else {
-			if (to_print.size() == 0) { to_print.push_back('0'); }
-			cout << "'" << pair.character << "' - " << to_print << endl;
-			counter += pair.frequency * to_print.size();
+			if (pair.character == '\n') {
+				if (to_print.size() == 0) { to_print.push_back('0'); }
+				cout << "'\\n' - " << to_print << endl;
+				counter += pair.frequency * to_print.size();
+			}
+			else {
+				if (to_print.size() == 0) { to_print.push_back('0'); }
+				cout << "'" << pair.character << " ' - " << to_print << endl;
+				counter += pair.frequency * to_print.size();
+			}
 		}
 	}
 }

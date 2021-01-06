@@ -19,7 +19,7 @@ BST* readFile() {
 	char ch = '\0';
 	if (in.good())
 	{
-		in >> ch;
+		ch = in.get();
 	}
 	else
 	{
@@ -33,7 +33,7 @@ BST* readFile() {
 		}
 
 		tree->Insert(ch);
-		in >> ch;
+		ch = in.get();
 	}
 	in.close();
 
